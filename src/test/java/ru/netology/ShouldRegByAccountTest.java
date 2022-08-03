@@ -4,9 +4,11 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -33,18 +35,13 @@ public class ShouldRegByAccountTest {
                 .shouldBe(Condition.visible);
     }
 
-    public static class GenerateDate {
-        public static String generateDate(int days) {
-            return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("06.08.2022"));
-        }
-    }
+    @Test
+    void autocompleteInput() {
+        Configuration.holdBrowserOpen = true;
+        open("http://localhost:9999");
 
-}
-//
-//@Test
-//void autocompleteInput() {
-//        $("[placeholder='Город']").setValue("Ка");
-//        $x("//span[text()=\"Казань\"]").click();
+        $("[placeholder='Город']").setValue("Ка");
+        $x("//span[text()=\"Казань\"]").click();
 //        //$("[type='date']").click();
 //      //  $("[class='calendar__title']").click();
 //        ElementsCollection calendarDay = $$("[class='calendar__layout']");
@@ -54,6 +51,13 @@ public class ShouldRegByAccountTest {
 //        //$x("//*[@data-day=\"1659646800000\"]").click();
 //        $(byName("name")).val("Иван Петров");
 //        $("[name='phone']").val("+89005558844");
-//}
+    }
+
+    public static class GenerateDate {
+        public static String generateDate(int days) {
+            return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("06.08.2022"));
+        }
+    }
+}
 
 
