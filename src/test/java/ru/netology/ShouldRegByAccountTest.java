@@ -41,7 +41,7 @@ public class ShouldRegByAccountTest {
         open("http://localhost:9999");
 
         $("[placeholder='Город']").setValue("Ка");
-        $x("//span[text()=\"Казань\"]");
+        $x("//span[text()=\"Казань\"]").click();
 //        //$("[type='date']").click();
 //      //  $("[class='calendar__title']").click();
 //        ElementsCollection calendarDay = $$("[class='calendar__layout']");
