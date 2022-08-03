@@ -20,6 +20,8 @@ public class ShouldRegByAccountTest {
     @Test
     void inputWithoutAutocompletion() {
         Configuration.holdBrowserOpen = true;
+        Configuration.headless = true;
+
         open("http://localhost:9999");
 
         $("[placeholder='Город']").setValue("Казань");
@@ -35,14 +37,16 @@ public class ShouldRegByAccountTest {
                 .shouldBe(Condition.visible);
     }
 
-    @Test
-    void autocompleteInput() {
-        Configuration.holdBrowserOpen = true;
-        open("http://localhost:9999");
-
-        $("[placeholder='Город']").setValue("Ка");
-        $x("//span[text()=\"Казань\"]").click();
-//        //$("[type='date']").click();
+//    @Test
+//    void autocompleteInput() {
+//        Configuration.holdBrowserOpen = true;
+//        Configuration.headless = true;
+//
+//        open("http://localhost:9999");
+//
+//        $("[placeholder='Город']").setValue("Ка");
+//        $x("//span[text()=\"Казань\"]").click();
+////        //$("[type='date']").click();
 //      //  $("[class='calendar__title']").click();
 //        ElementsCollection calendarDay = $$("[class='calendar__layout']");
 //        calendarDay.shouldBe("data-day=\"1660251600000\""));
@@ -51,7 +55,7 @@ public class ShouldRegByAccountTest {
 //        //$x("//*[@data-day=\"1659646800000\"]").click();
 //        $(byName("name")).val("Иван Петров");
 //        $("[name='phone']").val("+89005558844");
-    }
+ //   }
 
     public static class GenerateDate {
         public static String generateDate(int days) {
