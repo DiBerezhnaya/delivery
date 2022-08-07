@@ -65,7 +65,7 @@ public class ShouldRegByAccountTest {
 
     public static class GenerateDate {
         public static String generateDate(int days) {
-            return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("12.08.2022"));
+            return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         }
     }
 }
