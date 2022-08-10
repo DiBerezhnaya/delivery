@@ -2,6 +2,7 @@ package ru.netology;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
@@ -10,21 +11,19 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.codeborne.selenide.Condition.appear;
-import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class ShouldRegByAccountTest {
 
+    String deliveryDate = GenerateDate.generateDate(3);
+
     @BeforeEach
     void setUp() {
         Configuration.holdBrowserOpen = true;
-        Configuration.headless = true;
         open("http://localhost:9999");
     }
-
-    String deliveryDate = GenerateDate.generateDate(3);
 
     @Test
     void inputWithoutAutocompletion() {
@@ -39,12 +38,17 @@ public class ShouldRegByAccountTest {
         $(withText("Успешно!"))
                 .shouldBe(appear, Duration.ofSeconds(15))
                 .shouldBe(Condition.visible);
+        $("[class='notification__content']")
+                .shouldBe(appear, Duration.ofSeconds(15))
+                .shouldBe(Condition.visible);
+        $x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на " + deliveryDate));
     }
 
     @Test
     void autocompleteInput() {
         $("[placeholder='Город']").setValue("Ка");
-        $x("//span[text()=\"Казань\"]").click();
+        ElementsCollection city = $$("[class*='menu-item__control']");
+        city.exclude(hidden).get(4).click();
         $("[data-test-id='date']").click();
         LocalDate dateDefault = LocalDate.now().plusDays(3);
         LocalDate dateOfMeeting = LocalDate.now().plusDays(7);
@@ -59,8 +63,7 @@ public class ShouldRegByAccountTest {
         $(byText("Забронировать")).click();
         $("[class*='spin spin_size_m']").shouldBe(appear);
         $(withText("Успешно!"))
-                .shouldBe(appear, Duration.ofSeconds(15))
-                .shouldBe(Condition.visible);
+                .shouldBe(appear, Duration.ofSeconds(15));
     }
 
     public static class GenerateDate {
