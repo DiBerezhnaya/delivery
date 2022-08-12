@@ -47,8 +47,7 @@ public class ShouldRegByAccountTest {
     @Test
     void autocompleteInput() {
         $("[placeholder='Город']").setValue("Ка");
-        ElementsCollection city = $$("[class*='menu-item__control']");
-        city.exclude(hidden).get(4).click();
+        $$("[class*='menu-item__control']").find(exactText("Казань")).click();
         $("[data-test-id='date']").click();
         LocalDate dateDefault = LocalDate.now().plusDays(3);
         LocalDate dateOfMeeting = LocalDate.now().plusDays(7);
@@ -64,6 +63,10 @@ public class ShouldRegByAccountTest {
         $("[class*='spin spin_size_m']").shouldBe(appear);
         $(withText("Успешно!"))
                 .shouldBe(appear, Duration.ofSeconds(15));
+        $("[class='notification__content']")
+                .shouldBe(appear, Duration.ofSeconds(15))
+                .shouldBe(visible);
+        $x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на " + dayToSearch));
     }
 
     public static class GenerateDate {
